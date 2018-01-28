@@ -55,14 +55,14 @@ MonoBehaviour:
       reflection:
         blendType: 1
         reflectionQuality: 0
-        maxDistance: 33
+        maxDistance: 36
         iterationCount: 130
         stepSize: 9
         widthModifier: 0.5
         reflectionBlur: 1.84
         reflectBackfaces: 0
       intensity:
-        reflectionMultiplier: 1.03
+        reflectionMultiplier: 0.464
         fadeDistance: 100
         fresnelFade: 1
         fresnelFadePower: 1
