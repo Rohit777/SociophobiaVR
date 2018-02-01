@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityComponent : Component {
+public class EntityComponent : AbstractComponent {
 
 }

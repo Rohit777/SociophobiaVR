@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneralEventSystem : EventSystem {
+public class GeneralEventSystem : AbstractEventSystem {
 	public static GeneralEventSystem instance;
 
 	void Awake () {
