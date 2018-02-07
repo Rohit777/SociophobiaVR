@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EntityComponent))]
-public class PlayerComponent : Component {
+public class PlayerComponent : AbstractComponent {
 	private void Start () {
 
 	}

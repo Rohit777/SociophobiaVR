@@ -18,8 +18,8 @@ namespace GoogleVR.HelloVR {
   [RequireComponent(typeof(Collider))]
   public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
-    private Renderer renderer;
-
+	private Renderer renderer;
+	
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
 
