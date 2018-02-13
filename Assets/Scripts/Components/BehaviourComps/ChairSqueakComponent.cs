@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ChairSqueakComponent : NPCComponent {
-	private float probabilityFactor;
 	private Transform chairObject;
 	private AudioSource audioSource;
 
 	[SerializeField] private float timeProbability;
+	[SerializeField] private float probabilityFactor;
 	[SerializeField] private float rotationSpeed;
 	[SerializeField] private AudioClip chairSqueakSound;
 
@@ -15,13 +15,11 @@ public class ChairSqueakComponent : NPCComponent {
 		audioSource = GetComponent<AudioSource> ();
 		audioSource.clip = chairSqueakSound;
 		chairObject = transform.parent;
-		probabilityFactor = Mathf.Exp (3.0f);
-		timeProbability = Mathf.Clamp (Mathf.Exp (probabilityFactor * Time.time), 0f, 100f);
 	}
 
 	public override IEnumerator NPCAction () {
 		timeProbability += probabilityFactor * Time.fixedDeltaTime;
-		if (timeProbability > 245f) {
+		if (timeProbability > 195f) {
 			timeProbability = 0f;
 		}
 		while (true) {
