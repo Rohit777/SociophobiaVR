@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChairSqueakComponent : AbstractComponent {
+public class ChairSqueakComponent : NPCComponent {
 	private float probabilityFactor;
 	private Transform chairObject;
 	private AudioSource audioSource;
@@ -13,14 +13,26 @@ public class ChairSqueakComponent : AbstractComponent {
 
 	private void Start () {
 		audioSource = GetComponent<AudioSource> ();
+		audioSource.clip = chairSqueakSound;
 		chairObject = transform.parent;
-		probabilityFactor = Mathf.Exp (-3.0f);
+		probabilityFactor = Mathf.Exp (3.0f);
 		timeProbability = Mathf.Clamp (Mathf.Exp (probabilityFactor * Time.time), 0f, 100f);
 	}
 
-	IEnumerator SqueakAnimation () {
+	public override IEnumerator NPCAction () {
+		timeProbability += probabilityFactor * Time.fixedDeltaTime;
+		if (timeProbability > 245f) {
+			timeProbability = 0f;
+		}
 		while (true) {
-			chairObject.Rotate (new Vector3 (0f, Mathf.Sin (Time.time) * rotationSpeed, 0f));
+			if (timeProbability >= 90f && timeProbability <= 195f) {
+				if (!audioSource.isPlaying)
+					audioSource.Play ();
+	
+				chairObject.Rotate (new Vector3 (0f, 0.5f * Mathf.Sin (Time.time) * rotationSpeed, 0f));
+			} else {
+				audioSource.Stop ();
+			}
 			yield return null;
 		}
 	}
