@@ -17,4 +17,11 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 			StartCoroutine (npcComp.NPCAction ());
 		}
 	}
+
+	public void StopAllNPCAction () {
+		StopAllCoroutines ();
+
+		// Regenerate the actions based on NPC_ACTION_LIST.txt file.
+
+	}
 }
