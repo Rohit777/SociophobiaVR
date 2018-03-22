@@ -7,11 +7,6 @@ public class EventManager : MonoBehaviour {
 	private static List<float> timeList = new List<float>();
 	private static bool inSession = true;
 	private static float sessionCloseTime;
-	private static EventManager eventManager = new EventManager();
-
-	private EventManager(){
-		;
-	}
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +17,7 @@ public class EventManager : MonoBehaviour {
 		if (inSession == true) {
 			inSession = false;
 			sessionCloseTime = Time.time;
+			Debug.Log ("Session end time: " + sessionCloseTime);
 		}
 	}
 
@@ -33,13 +29,17 @@ public class EventManager : MonoBehaviour {
 	}
 
 
-	public static void RepeatEvents () {
+	public void RepeatEvents () {
 		if (inSession == false) {
 			int s = componentList.Count;
 			float diff = Time.time - sessionCloseTime;
 			for (int i = 0; i < s; i++) {
+				//Debug.Log ("Here");
+				//Debug.Log (timeList [i] + " " + diff);
 				if (timeList [i] >= diff) {
-					eventManager.StartCoroutine (componentList[i].NPCAction ());
+					//componentList [i].NPCAction ();
+					componentList[i].setTimeProbability(90f);
+					StartCoroutine (componentList[i].NPCRepeatAction ());
 					componentList.RemoveAt (i);
 					timeList.RemoveAt (i);
 					i--;
@@ -51,5 +51,6 @@ public class EventManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void update(){
+		RepeatEvents ();
 	}
 }

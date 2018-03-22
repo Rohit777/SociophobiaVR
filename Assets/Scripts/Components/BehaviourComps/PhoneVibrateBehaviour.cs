@@ -5,6 +5,7 @@ using UnityEngine;
 public class PhoneVibrateBehaviour : NPCComponent {
 	private AudioSource audioSource;
 	private float timeProbability;
+	private float timeProbabilityOnSpot;
 
 	[SerializeField] private float probabilityFactor;
 	[SerializeField] private AudioClip vibrateSound;
@@ -18,17 +19,46 @@ public class PhoneVibrateBehaviour : NPCComponent {
 		timeProbability += probabilityFactor * Time.fixedDeltaTime;
 		if (timeProbability > 195f) {
 			//XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.time - 105f).ToString());
-			EventManager.addEvent(this, Time.time - 105f);
+			//EventManager.addEvent(this, Time.time - 105f);
 			timeProbability = 0f;
 		}
 		while (true) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
-				if (!audioSource.isPlaying)
+				if (!audioSource.isPlaying) {
 					audioSource.Play ();
+					Debug.Log ("Action: " + Time.time);
+					EventManager.addEvent (this, Time.time);
+				}
 			} else {
 				audioSource.Stop ();
 			}
 			yield return null;
 		}
 	}
+
+	public override IEnumerator NPCRepeatAction () {
+		timeProbability += probabilityFactor * Time.fixedDeltaTime;
+		if (timeProbability > 195f) {
+			//XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.time - 105f).ToString());
+			//EventManager.addEvent(this, Time.time - 105f);
+			timeProbability = 0f;
+		}
+		while (true) {
+			if (timeProbability >= 90f && timeProbability <= 195f) {
+				if (!audioSource.isPlaying) {
+					audioSource.Play ();
+					Debug.Log ("Repeat: " + Time.time);
+					//EventManager.addEvent (this, Time.time);
+				}
+			} else {
+				audioSource.Stop ();
+			}
+			yield return null;
+		}
+	}
+
+	public override void setTimeProbability(float tp){
+		timeProbability = tp;
+	}
+		
 }

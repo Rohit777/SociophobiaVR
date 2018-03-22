@@ -12,12 +12,14 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 	
 	// Update is called once per frame
 	protected virtual void Update () {
+		//Debug.Log ("NPC System");
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			NPCComponent npcComp = NPCObject.GetComponent<NPCComponent> ();
 			StartCoroutine (npcComp.NPCAction ());
 
 		}
-		EventManager.RepeatEvents ();
+		gameObject.GetComponent<EventManager> ().RepeatEvents ();
+		//EventManager.RepeatEvents ();
 	}
 
 	public void StopAllNPCAction () {

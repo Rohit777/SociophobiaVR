@@ -6,5 +6,7 @@ using System;
 [RequireComponent(typeof(EntityComponent))]
 abstract public class NPCComponent : AbstractComponent {
 	abstract public IEnumerator NPCAction ();
+	abstract public void setTimeProbability(float tp);
+	abstract public IEnumerator NPCRepeatAction();
 	//abstract public IEnumerator NPCActionOnSpot ();
 }
