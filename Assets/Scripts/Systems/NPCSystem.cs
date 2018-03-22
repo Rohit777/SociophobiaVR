@@ -15,7 +15,9 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			NPCComponent npcComp = NPCObject.GetComponent<NPCComponent> ();
 			StartCoroutine (npcComp.NPCAction ());
+
 		}
+		EventManager.RepeatEvents ();
 	}
 
 	public void StopAllNPCAction () {

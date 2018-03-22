@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour {
 	}
 	
 	public void StopSessionAction () {
+		Debug.Log ("Session stopped");
 		npcSystem.StopAllNPCAction ();
+		EventManager.closeSession ();
 	}
 }

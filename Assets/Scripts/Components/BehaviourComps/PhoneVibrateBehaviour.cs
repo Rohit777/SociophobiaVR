@@ -17,7 +17,8 @@ public class PhoneVibrateBehaviour : NPCComponent {
 	public override IEnumerator NPCAction () {
 		timeProbability += probabilityFactor * Time.fixedDeltaTime;
 		if (timeProbability > 195f) {
-			XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.time - 105f).ToString());
+			//XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.time - 105f).ToString());
+			EventManager.addEvent(this, Time.time - 105f);
 			timeProbability = 0f;
 		}
 		while (true) {
