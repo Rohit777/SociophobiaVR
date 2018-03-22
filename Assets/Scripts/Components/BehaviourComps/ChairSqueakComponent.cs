@@ -40,6 +40,7 @@ public class ChairSqueakComponent : NPCComponent {
 	}
 
 	public override IEnumerator NPCRepeatAction () {
+		Debug.Log ("Just Repeat: " + Time.time);
 		timeProbability += probabilityFactor * Time.fixedDeltaTime;
 		if (timeProbability > 195f) {
 			//XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.time - 105f).ToString());
@@ -64,4 +65,9 @@ public class ChairSqueakComponent : NPCComponent {
 	public override void setTimeProbability(float tp){
 		timeProbability = tp;
 	}
+
+	public override void stop(){
+		StopAllCoroutines ();
+	}
+
 }

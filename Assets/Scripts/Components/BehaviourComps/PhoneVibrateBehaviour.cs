@@ -60,5 +60,9 @@ public class PhoneVibrateBehaviour : NPCComponent {
 	public override void setTimeProbability(float tp){
 		timeProbability = tp;
 	}
+
+	public override void stop(){
+		StopAllCoroutines ();
+	}
 		
 }

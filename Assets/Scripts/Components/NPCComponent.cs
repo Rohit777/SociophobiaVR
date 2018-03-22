@@ -8,5 +8,6 @@ abstract public class NPCComponent : AbstractComponent {
 	abstract public IEnumerator NPCAction ();
 	abstract public void setTimeProbability(float tp);
 	abstract public IEnumerator NPCRepeatAction();
+	abstract public void stop();
 	//abstract public IEnumerator NPCActionOnSpot ();
 }
