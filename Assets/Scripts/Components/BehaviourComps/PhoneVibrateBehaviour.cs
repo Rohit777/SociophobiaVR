@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PhoneVibrateBehaviour : NPCComponent {
+	public bool stopCoroutines = false;
+
 	private AudioSource audioSource;
 	private float timeProbability;
 	private float timeProbabilityOnSpot;
@@ -22,7 +24,7 @@ public class PhoneVibrateBehaviour : NPCComponent {
 			//EventManager.addEvent(this, Time.time - 105f);
 			timeProbability = 0f;
 		}
-		while (true) {
+		while (true && !stopCoroutines) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
@@ -43,7 +45,7 @@ public class PhoneVibrateBehaviour : NPCComponent {
 			//EventManager.addEvent(this, Time.time - 105f);
 			timeProbability = 0f;
 		}
-		while (true) {
+		while (true && !stopCoroutines) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
@@ -61,8 +63,9 @@ public class PhoneVibrateBehaviour : NPCComponent {
 		timeProbability = tp;
 	}
 
-	public override void stop(){
+	public override void stop() {
+		stopCoroutines = true;
+		audioSource.Stop ();
 		StopAllCoroutines ();
 	}
-		
 }

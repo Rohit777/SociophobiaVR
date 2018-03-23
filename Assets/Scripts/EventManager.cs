@@ -13,8 +13,8 @@ public class EventManager : MonoBehaviour {
 		
 	}
 
-	public static void closeSession(){
-		if (inSession == true) {
+	public static void closeSession (){
+		if (inSession) {
 			inSession = false;
 			sessionCloseTime = Time.time;
 			Debug.Log ("Session end time: " + sessionCloseTime);
@@ -22,7 +22,7 @@ public class EventManager : MonoBehaviour {
 	}
 
 	public static void addEvent(NPCComponent component, float time){
-		if (inSession == true) {
+		if (inSession) {
 			componentList.Add (component);
 			timeList.Add (time);
 		}
@@ -30,15 +30,12 @@ public class EventManager : MonoBehaviour {
 
 
 	public void RepeatEvents () {
-		if (inSession == false) {
+		if (!inSession) {
 			int s = componentList.Count;
 			float diff = Time.time - sessionCloseTime;
 			for (int i = 0; i < s; i++) {
-				//Debug.Log ("Here");
-				//Debug.Log (timeList [i] + " " + diff + " " +Time.time);
 				if (timeList [i] <= diff) {
 					Debug.Log (timeList [i] + " " + diff + " " +Time.time);
-					//componentList [i].NPCAction ();
 					componentList[i].setTimeProbability(90f);
 					StartCoroutine (componentList[i].NPCRepeatAction ());
 					componentList.RemoveAt (i);

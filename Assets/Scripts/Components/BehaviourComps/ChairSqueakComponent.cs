@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ChairSqueakComponent : NPCComponent {
+	public bool stopCoroutines = false;
+
 	private Transform chairObject;
 	private AudioSource audioSource;
 	private float timeProbability;
@@ -24,7 +26,7 @@ public class ChairSqueakComponent : NPCComponent {
 			//EventManager.addEvent(this, Time.time - 105f);
 			timeProbability = 0f;
 		}
-		while (true) {
+		while (true && !stopCoroutines) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
@@ -66,8 +68,10 @@ public class ChairSqueakComponent : NPCComponent {
 		timeProbability = tp;
 	}
 
-	public override void stop(){
-		StopAllCoroutines ();
+	public override void stop() {
+		stopCoroutines = true;
+		audioSource.Stop ();
+		StopCoroutine (NPCAction ());
 	}
 
 }
