@@ -37,22 +37,19 @@ public class PhoneVibrateBehaviour : NPCComponent {
 	}
 
 	public override IEnumerator NPCRepeatAction () {
-		timeProbability += probabilityFactor * Time.fixedDeltaTime;
-		if (timeProbability > 195f) {
-			//XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.time - 105f).ToString());
-			//EventManager.addEvent(this, Time.time - 105f);
-			timeProbability = 0f;
-		}
+		float timeProbability = 90f;
+		Debug.Log ("Repeat: " + Time.time);
 		while (true) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
-					Debug.Log ("Repeat: " + Time.time);
 					//EventManager.addEvent (this, Time.time);
 				}
 			} else {
 				audioSource.Stop ();
+				break;
 			}
+			timeProbability += probabilityFactor * Time.fixedDeltaTime;
 			yield return null;
 		}
 	}
