@@ -21,6 +21,14 @@ public class EventManager : MonoBehaviour {
 		}
 	}
 
+	public void closingSession (){
+		if (inSession) {
+			inSession = false;
+			sessionCloseTime = Time.time;
+			Debug.Log ("Session ending time: " + sessionCloseTime);
+		}
+	}
+
 	public static void addEvent(NPCComponent component, float time){
 		if (inSession) {
 			componentList.Add (component);
