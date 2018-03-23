@@ -39,8 +39,8 @@ public class EventManager : MonoBehaviour {
 				if (timeList [i] <= diff) {
 					Debug.Log (timeList [i] + " " + diff + " " +Time.time);
 					//componentList [i].NPCAction ();
-					//componentList[i].setTimeProbability(90f);
-					StartCoroutine (componentList[i].NPCRepeatAction());
+					componentList[i].setTimeProbability(90f);
+					StartCoroutine (componentList[i].NPCRepeatAction ());
 					componentList.RemoveAt (i);
 					timeList.RemoveAt (i);
 					i--;
