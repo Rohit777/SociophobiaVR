@@ -45,6 +45,7 @@ public class EventManager : MonoBehaviour {
 				if (timeList [i] <= diff) {
 					Debug.Log (timeList [i] + " " + diff + " " +Time.time);
 					componentList[i].setTimeProbability(90f);
+					componentList [i].setSessionEndTime (sessionCloseTime);
 					StartCoroutine (componentList[i].NPCRepeatAction ());
 					componentList.RemoveAt (i);
 					timeList.RemoveAt (i);

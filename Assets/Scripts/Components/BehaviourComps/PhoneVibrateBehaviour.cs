@@ -8,6 +8,7 @@ public class PhoneVibrateBehaviour : NPCComponent {
 	private AudioSource audioSource;
 	private float timeProbability;
 	private float timeProbabilityOnSpot;
+	private float sessionEndTime;
 
 	[SerializeField] private float probabilityFactor;
 	[SerializeField] private AudioClip vibrateSound;
@@ -28,7 +29,7 @@ public class PhoneVibrateBehaviour : NPCComponent {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
-					Debug.Log ("Action: " + Time.time);
+					//Debug.Log ("Action: " + Time.time);
 					EventManager.addEvent (this, Time.time);
 				}
 			} else {
@@ -39,8 +40,8 @@ public class PhoneVibrateBehaviour : NPCComponent {
 	}
 
 	public override IEnumerator NPCRepeatAction () {
-		Debug.Log ("Repeat: " + Time.time);
-		float timeProbability = 90f;
+		//Debug.Log ("Repeat: " + Time.time);
+		float timeProbability = 90f; 
 		while (true) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
@@ -56,6 +57,10 @@ public class PhoneVibrateBehaviour : NPCComponent {
 
 	public override void setTimeProbability(float tp){
 		timeProbability = tp;
+	}
+
+	public override void setSessionEndTime(float t){
+		sessionEndTime = t;
 	}
 
 	public override void stop() {
