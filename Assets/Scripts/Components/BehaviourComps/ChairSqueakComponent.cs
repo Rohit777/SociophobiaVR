@@ -7,6 +7,7 @@ public class ChairSqueakComponent : NPCComponent {
 
 	private Transform chairObject;
 	private AudioSource audioSource;
+	private Quaternion originalPos;
 	private float timeProbability;
 	private float sessionEndTime;
 
@@ -18,23 +19,24 @@ public class ChairSqueakComponent : NPCComponent {
 		audioSource = GetComponent<AudioSource> ();
 		audioSource.clip = chairSqueakSound;
 		chairObject = transform.parent;
+		originalPos = chairObject.rotation;
 	}
 
 	public override IEnumerator NPCAction () {
 		timeProbability += probabilityFactor * Time.fixedDeltaTime;
 		if (timeProbability > 195f) {
-			//XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.time - 105f).ToString());
-			//EventManager.addEvent(this, Time.time - 105f);
+			//XmlUtil.Save (gameObject.name + "/" + "ChairSqueakComponent" + (Time.timeSinceLevelLoad - 105f).ToString());
+			//EventManager.addEvent(this, Time.timeSinceLevelLoad - 105f);
 			timeProbability = 0f;
 		}
 		while (true && !stopCoroutines) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
-					//Debug.Log ("Action: " + Time.time);
-					EventManager.addEvent (this, Time.time);
+					//Debug.Log ("Action: " + Time.timeSinceLevelLoad);
+					EventManager.addEvent (this, Time.timeSinceLevelLoad);
 				}
-				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.time) * rotationSpeed, 0f));
+				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad) * rotationSpeed, 0f));
 			} else {
 				audioSource.Stop ();
 			}
@@ -43,14 +45,14 @@ public class ChairSqueakComponent : NPCComponent {
 	}
 
 	public override IEnumerator NPCRepeatAction () {
-		//Debug.Log ("Repeat: " + Time.time);
+		//Debug.Log ("Repeat: " + Time.timeSinceLevelLoad);
 		//float timeProbability = 90f;
 		while (true) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
 				}
-				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.time - sessionEndTime) * rotationSpeed, 0f));
+				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad - sessionEndTime) * rotationSpeed, 0f));
 			} else {
 				audioSource.Stop ();
 			}
@@ -70,7 +72,7 @@ public class ChairSqueakComponent : NPCComponent {
 	public override void stop() {
 		stopCoroutines = true;
 		audioSource.Stop ();
+		chairObject.rotation = originalPos;
 		StopCoroutine (NPCAction ());
 	}
-
 }

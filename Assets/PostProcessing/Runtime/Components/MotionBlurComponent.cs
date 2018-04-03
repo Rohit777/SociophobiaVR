@@ -200,7 +200,7 @@ namespace UnityEngine.PostProcessing
                     cb.SetRenderTarget(m_MRT, lumaTexture);
                     cb.DrawMesh(GraphicsUtils.quad, Matrix4x4.identity, material, 0, (int)Pass.FrameCompression);
 
-                    m_Time = Time.time;
+                    m_Time = Time.timeSinceLevelLoad;
                 }
 
                 public void MakeRecordRaw(CommandBuffer cb, RenderTargetIdentifier source, int width, int height, RenderTextureFormat format)
@@ -213,7 +213,7 @@ namespace UnityEngine.PostProcessing
                     cb.SetGlobalTexture(Uniforms._MainTex, source);
                     cb.Blit(source, lumaTexture);
 
-                    m_Time = Time.time;
+                    m_Time = Time.timeSinceLevelLoad;
                 }
             }
 
@@ -255,7 +255,7 @@ namespace UnityEngine.PostProcessing
 
             public void BlendFrames(CommandBuffer cb, float strength, RenderTargetIdentifier source, RenderTargetIdentifier destination, Material material)
             {
-                var t = Time.time;
+                var t = Time.timeSinceLevelLoad;
 
                 var f1 = GetFrameRelative(-1);
                 var f2 = GetFrameRelative(-2);

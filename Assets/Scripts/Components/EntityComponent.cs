@@ -5,6 +5,5 @@ using System.Xml.Serialization;
 using UnityEngine;
 
 public class EntityComponent : AbstractComponent {
-	[XmlAttribute("Components")]
-	public NPCComponent[] entityComponents;
+	
 }

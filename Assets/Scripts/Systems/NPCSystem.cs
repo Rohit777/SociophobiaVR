@@ -8,12 +8,12 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 	private bool inSession = true;
 
 	protected virtual void Start () {
-
+		EntityManager.Start ();
 	}
 	
-	// Update is called once per frame
-	protected virtual void Update () {
-		if(inSession) {
+	// FixedUpdate is called once per frame
+	protected virtual void FixedUpdate () {
+		if (inSession) {
 			foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 				NPCComponent npcComp = NPCObject.GetComponent<NPCComponent> ();
 				StartCoroutine (npcComp.NPCAction ());
@@ -25,6 +25,7 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 
 	public void StopAllNPCAction () {
 		inSession = false;
+		sessionManager.GetComponent<EventManager> ().closingSession ();
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			NPCComponent npcComp = NPCObject.GetComponent<NPCComponent> ();
 			npcComp.stop ();

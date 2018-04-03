@@ -16,7 +16,7 @@ public class EventManager : MonoBehaviour {
 	public static void closeSession (){
 		if (inSession) {
 			inSession = false;
-			sessionCloseTime = Time.time;
+			sessionCloseTime = Time.timeSinceLevelLoad;
 			Debug.Log ("Session end time: " + sessionCloseTime);
 		}
 	}
@@ -24,7 +24,7 @@ public class EventManager : MonoBehaviour {
 	public void closingSession (){
 		if (inSession) {
 			inSession = false;
-			sessionCloseTime = Time.time;
+			sessionCloseTime = Time.timeSinceLevelLoad;
 			Debug.Log ("Session ending time: " + sessionCloseTime);
 		}
 	}
@@ -40,10 +40,10 @@ public class EventManager : MonoBehaviour {
 	public void RepeatEvents () {
 		if (!inSession) {
 			int s = componentList.Count;
-			float diff = Time.time - sessionCloseTime;
+			float diff = Time.timeSinceLevelLoad - sessionCloseTime;
 			for (int i = 0; i < s; i++) {
 				if (timeList [i] <= diff) {
-					Debug.Log (timeList [i] + " " + diff + " " +Time.time);
+					Debug.Log (timeList [i] + " " + diff + " " +Time.timeSinceLevelLoad);
 					componentList[i].setTimeProbability(90f);
 					componentList [i].setSessionEndTime (sessionCloseTime);
 					StartCoroutine (componentList[i].NPCRepeatAction ());

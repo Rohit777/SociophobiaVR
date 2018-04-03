@@ -7,7 +7,7 @@ public class EntityManager {
 	private static List<GameObject> entityList = new List<GameObject> ();
 
 	[RuntimeInitializeOnLoadMethod]
-	static void Start () {
+	public static void Start () {
 		foreach (EntityComponent sceneObject in GameObject.FindObjectsOfType<EntityComponent> ()) {
 			Add (sceneObject.gameObject);
 		}

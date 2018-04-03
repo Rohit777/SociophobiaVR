@@ -339,8 +339,8 @@ public class GvrAudioSource : MonoBehaviour {
     // Update occlusion state.
     if (!occlusionEnabled) {
       currentOcclusion = 0.0f;
-    } else if (Time.time >= nextOcclusionUpdate) {
-      nextOcclusionUpdate = Time.time + GvrAudio.occlusionDetectionInterval;
+    } else if (Time.timeSinceLevelLoad >= nextOcclusionUpdate) {
+      nextOcclusionUpdate = Time.timeSinceLevelLoad + GvrAudio.occlusionDetectionInterval;
       currentOcclusion = GvrAudio.ComputeOcclusion(transform);
     }
     // Update source.

@@ -49,10 +49,10 @@ namespace GoogleVR.VideoDemo {
     }
 
     public void Toggle() {
-      if (Time.time - lastUsage < Cooldown) {
+      if (Time.timeSinceLevelLoad - lastUsage < Cooldown) {
         return;
       }
-      lastUsage = Time.time;
+      lastUsage = Time.timeSinceLevelLoad;
       on = !on;
       RaiseToggleEvent(on);
     }
