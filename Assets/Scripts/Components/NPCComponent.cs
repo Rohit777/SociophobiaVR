@@ -6,9 +6,10 @@ using System;
 [RequireComponent(typeof(EntityComponent))]
 abstract public class NPCComponent : AbstractComponent {
 	abstract public IEnumerator NPCAction ();
-	abstract public void setTimeProbability(float tp);
-	abstract public IEnumerator NPCRepeatAction();
-	abstract public void stop();
-	abstract public void setSessionEndTime(float t);
+	abstract public void setTimeProbability (float tp);
+	abstract public IEnumerator NPCRepeatAction ();
+	abstract public void stop ();
+	abstract public void start ();
+	abstract public void setSessionEndTime (float t);
 	//abstract public IEnumerator NPCActionOnSpot ();
 }

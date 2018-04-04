@@ -19,6 +19,8 @@ public class ComponentListItem : MonoBehaviour {
 		associatedComponent.enabled = !associatedComponent.enabled;
 		if (!associatedComponent.enabled) {
 			associatedComponent.stop ();
+		} else {
+			associatedComponent.start ();
 		}
 	}
 }

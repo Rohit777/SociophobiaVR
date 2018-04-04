@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChairSqueakComponent : NPCComponent {
+public class PhoneVibrateBehavior : NPCComponent {
 	public bool stopCoroutines = false;
 
-	private Transform chairObject;
 	private AudioSource audioSource;
-	private Quaternion originalPos;
 	private float timeProbability;
+	private float timeProbabilityOnSpot;
 	private float sessionEndTime;
 
 	[SerializeField] private float probabilityFactor;
-	[SerializeField] private float rotationSpeed;
-	[SerializeField] private AudioClip chairSqueakSound;
+	[SerializeField] private AudioClip vibrateSound;
 
 	private void Start () {
 		audioSource = GetComponent<AudioSource> ();
-		audioSource.clip = chairSqueakSound;
-		chairObject = transform.parent;
-		originalPos = chairObject.rotation;
+		audioSource.clip = vibrateSound;
 	}
 
 	public override IEnumerator NPCAction () {
@@ -36,7 +32,6 @@ public class ChairSqueakComponent : NPCComponent {
 					//Debug.Log ("Action: " + Time.timeSinceLevelLoad);
 					EventManager.addEvent (this, Time.timeSinceLevelLoad);
 				}
-				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad) * rotationSpeed, 0f));
 			} else {
 				audioSource.Stop ();
 			}
@@ -46,13 +41,12 @@ public class ChairSqueakComponent : NPCComponent {
 
 	public override IEnumerator NPCRepeatAction () {
 		//Debug.Log ("Repeat: " + Time.timeSinceLevelLoad);
-		//float timeProbability = 90f;
+		float timeProbability = 90f; 
 		while (true) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
 				}
-				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad - sessionEndTime) * rotationSpeed, 0f));
 			} else {
 				audioSource.Stop ();
 			}
@@ -69,10 +63,14 @@ public class ChairSqueakComponent : NPCComponent {
 		sessionEndTime = t;
 	}
 
-	public override void stop() {
+	public override void stop () {
 		stopCoroutines = true;
 		audioSource.Stop ();
-		chairObject.rotation = originalPos;
-		StopCoroutine (NPCAction ());
+		StopAllCoroutines ();
+	}
+
+	public override void start () {
+		stopCoroutines = false;
+		StartCoroutine (NPCAction());
 	}
 }
