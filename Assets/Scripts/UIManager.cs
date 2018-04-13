@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class UIManager : MonoBehaviour {
 	public static UIManager instance;
@@ -14,7 +15,10 @@ public class UIManager : MonoBehaviour {
 	private GameObject npcGameObjectName;
 	private GameObject compListItemParent;
 
+	private bool IsServer = false;
+
 	void Start () {
+		EntityManager.Start ();
 		if (instance == null) {
 			instance = this;
 		} else {
@@ -23,7 +27,11 @@ public class UIManager : MonoBehaviour {
 		npcComponentListPrefab = (GameObject) Resources.Load ("ComponentList");
 		componentListItemPrefab = (GameObject) Resources.Load ("ComponentButton");
 		npcGameObjectName = (GameObject)Resources.Load ("GameObjectName");
-		ControllerUISetup ();
+		CheckPrivileges ();
+		if (IsServer) {
+			transform.GetChild(0).gameObject.SetActive (true);
+			ControllerUISetup ();
+		}
 	}
 	
 	public void StopSessionAction () {
@@ -32,7 +40,7 @@ public class UIManager : MonoBehaviour {
 		EventManager.closeSession ();
 	}
 
-	void ControllerUISetup () {
+	private void ControllerUISetup () {
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			GameObject _newList = Instantiate (npcComponentListPrefab);
 			_newList.transform.position = Vector3.zero;
@@ -50,5 +58,17 @@ public class UIManager : MonoBehaviour {
 				_newListItem.GetComponent<ComponentListItem> ().Setup (npcComp);
 			}
 		}
+	}
+
+	private void CheckPrivileges () {
+		if (NetworkServer.connections.Count == 1) {
+			IsServer = true;
+		} else {
+			IsServer = false;
+		}
+	}
+
+	public void ToggleControllerUI () {
+		transform.GetChild (0).GetChild (0).gameObject.SetActive (!transform.GetChild (0).GetChild (0).gameObject.activeInHierarchy);
 	}
 }

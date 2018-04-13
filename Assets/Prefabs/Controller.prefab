@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4459490968724796}
   - component: {fileID: 114818964328839538}
   - component: {fileID: 114424849258631812}
+  - component: {fileID: 114748535891955882}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -128,6 +129,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tppCameraPositions: []
+--- !u!114 &114748535891955882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1948908887321498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa03e8bf0cf74242b38b4ddab1c6f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentsToDisable:
+  - {fileID: 20513359190330288}
+  - {fileID: 81232510638311246}
+  - {fileID: 114424849258631812}
+  playerCamera: {fileID: 1913372236368608}
 --- !u!114 &114818964328839538
 MonoBehaviour:
   m_ObjectHideFlags: 1

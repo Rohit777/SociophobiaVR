@@ -15,21 +15,23 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 	protected virtual void FixedUpdate () {
 		if (inSession) {
 			foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
-				NPCComponent npcComp = NPCObject.GetComponent<NPCComponent> ();
-				StartCoroutine (npcComp.NPCAction ());
+				NPCComponent[] npcComps = NPCObject.GetComponents<NPCComponent> ();
+				foreach (NPCComponent npcComp in npcComps) {
+					StartCoroutine (npcComp.NPCAction ());
+				}
 			}
 		}
 		sessionManager.GetComponent<EventManager> ().RepeatEvents ();
-		//EventManager.RepeatEvents ();
 	}
 
 	public void StopAllNPCAction () {
 		inSession = false;
 		sessionManager.GetComponent<EventManager> ().closingSession ();
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
-			NPCComponent npcComp = NPCObject.GetComponent<NPCComponent> ();
-			npcComp.stop ();
+			NPCComponent[] npcComps = NPCObject.GetComponents<NPCComponent> ();
+			foreach (NPCComponent npcComp in npcComps) {
+				npcComp.stop ();
+			}
 		}
-		// Regenerate the actions based on NPC_ACTION_LIST.txt file.
 	}
 }

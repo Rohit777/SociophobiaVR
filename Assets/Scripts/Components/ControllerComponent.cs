@@ -5,32 +5,40 @@ using UnityEngine.Networking;
 
 public class ControllerComponent : MonoBehaviour {
 
-	[SerializeField] private Transform[] tppCameraPositions;
+	[SerializeField] private List<Transform> tppCameraPositions;
 
 	private int currentCameraIndex = 0;
+	private bool updatedOnce = false;
 
-	void Start () {
-		for (int i = 0; i < tppCameraPositions.Length; i++) {
-			if (transform.position.Equals (tppCameraPositions[i].position)) {
-				currentCameraIndex = i;
-				break;
+	void UpdatePositions () {
+		if (!updatedOnce) {
+			for (int i = 0; i < tppCameraPositions.Count; i++) {
+				if (transform.position.Equals (tppCameraPositions [i].position)) {
+					currentCameraIndex = i;
+					break;
+				}
 			}
 		}
 	}
 
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.A)) {
-			currentCameraIndex--;
-			if (currentCameraIndex < 0) {
-				currentCameraIndex = tppCameraPositions.Length - 1;
+		if (tppCameraPositions.Count == 0) {
+			tppCameraPositions = NetworkManager.singleton.startPositions;
+		} else {
+			UpdatePositions ();
+			if (Input.GetKeyDown (KeyCode.A)) {
+				currentCameraIndex--;
+				if (currentCameraIndex < 0) {
+					currentCameraIndex = tppCameraPositions.Count - 1;
+				}
+				WarpTo ();
+			} else if (Input.GetKeyDown (KeyCode.D)) {
+				currentCameraIndex++;
+				if (currentCameraIndex > tppCameraPositions.Count - 1) {
+					currentCameraIndex = 0;
+				}
+				WarpTo ();
 			}
-			WarpTo ();
-		} else if (Input.GetKeyDown (KeyCode.D)) {
-			currentCameraIndex++;
-			if (currentCameraIndex > tppCameraPositions.Length - 1) {
-				currentCameraIndex = 0;
-			}
-			WarpTo ();
 		}
 	}
 
