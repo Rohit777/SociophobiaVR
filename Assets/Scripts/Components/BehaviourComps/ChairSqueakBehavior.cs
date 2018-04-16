@@ -19,7 +19,9 @@ public class ChairSqueakBehavior : NPCComponent {
 		audioSource = GetComponent<AudioSource> ();
 		audioSource.clip = chairSqueakSound;
 		chairObject = transform.parent;
-		originalPos = chairObject.rotation;
+		if (chairObject != null) {
+			originalPos = chairObject.rotation;
+		}
 	}
 
 	public override IEnumerator NPCAction () {
@@ -36,7 +38,9 @@ public class ChairSqueakBehavior : NPCComponent {
 					//Debug.Log ("Action: " + Time.timeSinceLevelLoad);
 					EventManager.addEvent (this, Time.timeSinceLevelLoad);
 				}
-				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad) * rotationSpeed, 0f));
+				if (chairObject != null) {
+					chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad) * rotationSpeed, 0f));
+				}
 			} else {
 				audioSource.Stop ();
 			}
@@ -52,7 +56,9 @@ public class ChairSqueakBehavior : NPCComponent {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
 				}
-				chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad) * rotationSpeed, 0f));
+				if (chairObject != null) {
+					chairObject.Rotate (new Vector3 (0f, 0.4f * Mathf.Sin (Time.timeSinceLevelLoad) * rotationSpeed, 0f));
+				}
 			} else {
 				audioSource.Stop ();
 			}

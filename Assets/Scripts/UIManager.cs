@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour {
 		EventManager.closeSession ();
 	}
 
-	private void ControllerUISetup () {
+	public void ControllerUISetup () {
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			GameObject _newList = Instantiate (npcComponentListPrefab);
 			_newList.transform.position = Vector3.zero;

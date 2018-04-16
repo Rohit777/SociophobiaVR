@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ControllerComponent : MonoBehaviour {
+public class ControllerComponent : NetworkBehaviour {
 
 	[SerializeField] private List<Transform> tppCameraPositions;
+	[SerializeField] private List<GameObject> NPCPrefabs;
+	[SerializeField] private List<Transform> NPCSpawnPoints;
 
 	private int currentCameraIndex = 0;
 	private bool updatedOnce = false;
+	private bool updatedSpawnPoints = false;
+	private Vector3 npcObjectPosition = new Vector3 (0f, -1237f, 665f);
+	private Quaternion npcObjectRotation = Quaternion.identity;
+	private Vector3 npcObjectScale = new Vector3 (6722f, 6722f, 6722f);
 
 	void UpdatePositions () {
 		if (!updatedOnce) {
@@ -22,9 +28,21 @@ public class ControllerComponent : MonoBehaviour {
 	}
 
 	void Update () {
+		if (!updatedSpawnPoints) {
+			GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag ("Chairs");
+			foreach (GameObject spawnPoint in spawnPoints) {
+				NPCSpawnPoints.Add (spawnPoint.transform);
+			}
+			if (NPCSpawnPoints.Count == 6) {
+				UIManager.instance.ControllerUISetup ();
+				updatedSpawnPoints = true;
+			}
+		}
+
 		if (tppCameraPositions.Count == 0) {
 			tppCameraPositions = NetworkManager.singleton.startPositions;
 		} else {
+			CmdSpawnNPCObjects ();
 			UpdatePositions ();
 			if (Input.GetKeyDown (KeyCode.A)) {
 				currentCameraIndex--;
@@ -45,5 +63,20 @@ public class ControllerComponent : MonoBehaviour {
 	void WarpTo () {
 		transform.position = tppCameraPositions [currentCameraIndex].position;
 		transform.rotation = tppCameraPositions [currentCameraIndex].rotation;
+	}
+		
+	[Command]
+	private void CmdSpawnNPCObjects () {
+		GameObject _npcPrefab = NPCPrefabs[Random.Range(0, NPCPrefabs.Count)];
+		if (NPCSpawnPoints.Count > 0) {
+			Transform _spawnPoint = NPCSpawnPoints [Random.Range (0, NPCSpawnPoints.Count)];
+			GameObject _serverObj = Instantiate (_npcPrefab) as GameObject;
+			_serverObj.transform.SetParent (_spawnPoint);
+			_serverObj.transform.localPosition = npcObjectPosition;
+			_serverObj.transform.localRotation = npcObjectRotation;
+			_serverObj.transform.localScale = npcObjectScale;
+			NetworkServer.SpawnWithClientAuthority (_serverObj, NetworkServer.connections [0]);
+			NPCSpawnPoints.Remove (_spawnPoint);
+		}
 	}
 }

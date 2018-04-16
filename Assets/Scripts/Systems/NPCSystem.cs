@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class NPCSystem : MonoBehaviour, AbstractEventSystem {
+public class NPCSystem : NetworkBehaviour, AbstractEventSystem {
 	// Use this for initialization
 	[SerializeField] private GameObject sessionManager;
+
 	private bool inSession = true;
 
 	protected virtual void Start () {
@@ -13,6 +15,8 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 	
 	// FixedUpdate is called once per frame
 	protected virtual void FixedUpdate () {
+		EntityManager.Start ();
+
 		if (inSession) {
 			foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 				NPCComponent[] npcComps = NPCObject.GetComponents<NPCComponent> ();
@@ -21,7 +25,7 @@ public class NPCSystem : MonoBehaviour, AbstractEventSystem {
 				}
 			}
 		}
-		sessionManager.GetComponent<EventManager> ().RepeatEvents ();
+		//sessionManager.GetComponent<EventManager> ().RepeatEvents ();
 	}
 
 	public void StopAllNPCAction () {
