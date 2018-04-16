@@ -67,15 +67,15 @@ public class ChairSqueakBehavior : NPCComponent {
 		}
 	}
 
-	public override void setTimeProbability(float tp){
+	public override void setTimeProbability (float tp) {
 		timeProbability = tp;
 	}
 
-	public override void setSessionEndTime(float t){
+	public override void setSessionEndTime (float t) {
 		sessionEndTime = t;
 	}
 
-	public override void stop() {
+	public override void stop () {
 		stopCoroutines = true;
 		audioSource.Stop ();
 		chairObject.rotation = originalPos;

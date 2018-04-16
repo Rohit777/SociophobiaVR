@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class NPCSystem : NetworkBehaviour, AbstractEventSystem {
-	// Use this for initialization
-	[SerializeField] private GameObject sessionManager;
-
 	private bool inSession = true;
 
 	protected virtual void Start () {
@@ -24,13 +21,14 @@ public class NPCSystem : NetworkBehaviour, AbstractEventSystem {
 					StartCoroutine (npcComp.NPCAction ());
 				}
 			}
+		} else {
+			GetComponent<EventManager> ().RepeatEvents ();
 		}
-		//sessionManager.GetComponent<EventManager> ().RepeatEvents ();
 	}
 
 	public void StopAllNPCAction () {
 		inSession = false;
-		sessionManager.GetComponent<EventManager> ().closingSession ();
+		GetComponent<EventManager> ().closingSession ();
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			NPCComponent[] npcComps = NPCObject.GetComponents<NPCComponent> ();
 			foreach (NPCComponent npcComp in npcComps) {

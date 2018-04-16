@@ -9,32 +9,45 @@ public class ControllerComponent : NetworkBehaviour {
 	[SerializeField] private List<GameObject> NPCPrefabs;
 	[SerializeField] private List<Transform> NPCSpawnPoints;
 
+	private int npcObjectsSelected;
 	private int currentCameraIndex = 0;
 	private bool updatedOnce = false;
 	private bool updatedSpawnPoints = false;
+	private bool spawnedAllNPCObjects = false;
+	private bool controllerUISet = false;
+
 	private Vector3 npcObjectPosition = new Vector3 (0f, -1237f, 665f);
 	private Quaternion npcObjectRotation = Quaternion.identity;
 	private Vector3 npcObjectScale = new Vector3 (6722f, 6722f, 6722f);
+
+	void Start () {
+		npcObjectsSelected = Random.Range (2, 5);
+	}
 
 	void UpdatePositions () {
 		if (!updatedOnce) {
 			for (int i = 0; i < tppCameraPositions.Count; i++) {
 				if (transform.position.Equals (tppCameraPositions [i].position)) {
 					currentCameraIndex = i;
+					updatedOnce = true;
 					break;
 				}
 			}
 		}
 	}
 
-	void Update () {
+	void FixedUpdate () {
+		if (spawnedAllNPCObjects && !controllerUISet) {
+			UIManager.instance.ControllerUISetup ();
+			controllerUISet = true;
+		}
+
 		if (!updatedSpawnPoints) {
 			GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag ("Chairs");
 			foreach (GameObject spawnPoint in spawnPoints) {
 				NPCSpawnPoints.Add (spawnPoint.transform);
 			}
 			if (NPCSpawnPoints.Count == 6) {
-				UIManager.instance.ControllerUISetup ();
 				updatedSpawnPoints = true;
 			}
 		}
@@ -68,7 +81,7 @@ public class ControllerComponent : NetworkBehaviour {
 	[Command]
 	private void CmdSpawnNPCObjects () {
 		GameObject _npcPrefab = NPCPrefabs[Random.Range(0, NPCPrefabs.Count)];
-		if (NPCSpawnPoints.Count > 0) {
+		if (NPCSpawnPoints.Count > 6 - npcObjectsSelected) {
 			Transform _spawnPoint = NPCSpawnPoints [Random.Range (0, NPCSpawnPoints.Count)];
 			GameObject _serverObj = Instantiate (_npcPrefab) as GameObject;
 			_serverObj.transform.SetParent (_spawnPoint);
@@ -77,6 +90,8 @@ public class ControllerComponent : NetworkBehaviour {
 			_serverObj.transform.localScale = npcObjectScale;
 			NetworkServer.SpawnWithClientAuthority (_serverObj, NetworkServer.connections [0]);
 			NPCSpawnPoints.Remove (_spawnPoint);
+		} else {
+			spawnedAllNPCObjects = true;
 		}
 	}
 }
