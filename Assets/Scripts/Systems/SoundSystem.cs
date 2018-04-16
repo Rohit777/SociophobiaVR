@@ -15,7 +15,9 @@ public class SoundSystem : MonoBehaviour {
 	}
 
 	public void Update () {
+		Debug.Log (EventManager.inSession);
 		if (!EventManager.inSession) {
+			Debug.Log ("Okay");
 			audioSource.Play ();
 		}
 	}

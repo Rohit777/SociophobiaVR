@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114424849258631812}
   - component: {fileID: 114748535891955882}
   - component: {fileID: 114612393193366220}
+  - component: {fileID: 114931874918299744}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -146,7 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756b09b7fe10f42fc87542f39e89cf57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sessionManager: {fileID: 0}
 --- !u!114 &114748535891955882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,6 +195,17 @@ MonoBehaviour:
     i15: 62
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114931874918299744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1948908887321498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa9db2df4e1f12645ae5878813d020b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!124 &124796566090869474
 Behaviour:
   m_ObjectHideFlags: 1

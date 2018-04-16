@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class NPCSystem : NetworkBehaviour, AbstractEventSystem {
-	private bool inSession = true;
-
 	protected virtual void Start () {
 		EntityManager.Start ();
 	}
@@ -14,7 +12,7 @@ public class NPCSystem : NetworkBehaviour, AbstractEventSystem {
 	protected virtual void FixedUpdate () {
 		EntityManager.Start ();
 
-		if (inSession) {
+		if (EventManager.inSession) {
 			foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 				NPCComponent[] npcComps = NPCObject.GetComponents<NPCComponent> ();
 				foreach (NPCComponent npcComp in npcComps) {
@@ -27,8 +25,6 @@ public class NPCSystem : NetworkBehaviour, AbstractEventSystem {
 	}
 
 	public void StopAllNPCAction () {
-		inSession = false;
-		GetComponent<EventManager> ().closeSession ();
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			NPCComponent[] npcComps = NPCObject.GetComponents<NPCComponent> ();
 			foreach (NPCComponent npcComp in npcComps) {

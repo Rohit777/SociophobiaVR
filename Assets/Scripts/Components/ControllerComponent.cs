@@ -36,7 +36,7 @@ public class ControllerComponent : NetworkBehaviour {
 		}
 	}
 
-	void FixedUpdate () {
+	void Update () {
 		if (spawnedAllNPCObjects && !controllerUISet) {
 			UIManager.instance.ControllerUISetup ();
 			controllerUISet = true;

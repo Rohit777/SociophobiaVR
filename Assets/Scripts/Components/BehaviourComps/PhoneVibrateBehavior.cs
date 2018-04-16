@@ -22,12 +22,12 @@ public class PhoneVibrateBehavior : NPCComponent {
 		timeProbability += probabilityFactor * Time.fixedDeltaTime;
 		if (timeProbability > 195f) {
 			timeProbability = 0f;
+			EventManager.addEvent (this, Time.timeSinceLevelLoad - 3f);
 		}
 		while (true && !stopCoroutines) {
 			if (timeProbability >= 90f && timeProbability <= 195f) {
 				if (!audioSource.isPlaying) {
 					audioSource.Play ();
-					EventManager.addEvent (this, Time.timeSinceLevelLoad);
 				}
 			} else {
 				audioSource.Stop ();
@@ -53,6 +53,10 @@ public class PhoneVibrateBehavior : NPCComponent {
 
 	public override void setTimeProbability(float tp){
 		timeProbability = tp;
+	}
+
+	public override float getTimeProbability () {
+		return timeProbability;
 	}
 
 	public override void setSessionEndTime(float t){

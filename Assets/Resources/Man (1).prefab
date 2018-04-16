@@ -419,9 +419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopCoroutines: 0
-  probabilityFactor: 0
-  rotationSpeed: 0
-  chairSqueakSound: {fileID: 0}
+  probabilityFactor: 20
+  rotationSpeed: 0.001
+  chairSqueakSound: {fileID: 8300000, guid: 4f9976a504ffe034a80348a28823dd7b, type: 3}
 --- !u!114 &114670195916080350
 MonoBehaviour:
   m_ObjectHideFlags: 1

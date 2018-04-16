@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 public class UIManager : MonoBehaviour {
 	public static UIManager instance;
 
-	[SerializeField] private NPCSystem npcSystem;
 	[SerializeField] private Transform compListParent;
 
 	private GameObject npcComponentListPrefab;
@@ -64,5 +63,9 @@ public class UIManager : MonoBehaviour {
 
 	public void ToggleControllerUI () {
 		transform.GetChild (0).GetChild (0).gameObject.SetActive (!transform.GetChild (0).GetChild (0).gameObject.activeInHierarchy);
+	}
+
+	public void OnStopSession () {
+		EventManager.closeSession ();
 	}
 }
