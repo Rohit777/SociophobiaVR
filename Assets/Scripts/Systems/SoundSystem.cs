@@ -14,7 +14,9 @@ public class SoundSystem : MonoBehaviour {
 		audioSource.clip = Microphone.Start("", false, sessionLength, recordingFrequency);
 	}
 
-	public void PlayRecordedAudio () {
-		audioSource.Play ();
+	public void Update () {
+		if (!EventManager.inSession) {
+			audioSource.Play ();
+		}
 	}
 }

@@ -6,7 +6,7 @@ public class EventManager : MonoBehaviour {
 	private static List<NPCComponent> componentList = new List<NPCComponent> ();
 	private static List<Quaternion> playerRotationList;
 	private static List<float> timeList = new List<float>();
-	private static bool inSession = true;
+	public static bool inSession = true;
 	private static float sessionCloseTime;
 
 	// Use this for initialization
