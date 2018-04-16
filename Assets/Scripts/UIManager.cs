@@ -33,12 +33,6 @@ public class UIManager : MonoBehaviour {
 			ControllerUISetup ();
 		}
 	}
-	
-	public void StopSessionAction () {
-		//Debug.Log ("Session stopped");
-		npcSystem.StopAllNPCAction ();
-		EventManager.closeSession ();
-	}
 
 	public void ControllerUISetup () {
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {

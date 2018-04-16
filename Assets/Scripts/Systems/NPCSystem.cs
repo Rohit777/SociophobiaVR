@@ -28,7 +28,7 @@ public class NPCSystem : NetworkBehaviour, AbstractEventSystem {
 
 	public void StopAllNPCAction () {
 		inSession = false;
-		GetComponent<EventManager> ().closingSession ();
+		GetComponent<EventManager> ().closeSession ();
 		foreach (GameObject NPCObject in EntityManager.getObjectsOfType<NPCComponent>()) {
 			NPCComponent[] npcComps = NPCObject.GetComponents<NPCComponent> ();
 			foreach (NPCComponent npcComp in npcComps) {

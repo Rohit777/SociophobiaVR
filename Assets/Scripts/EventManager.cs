@@ -14,19 +14,11 @@ public class EventManager : MonoBehaviour {
 
 	}
 
-	public static void closeSession () {
+	public void closeSession () {
 		if (inSession) {
 			inSession = false;
 			sessionCloseTime = Time.timeSinceLevelLoad;
 			Debug.Log ("Session end time: " + sessionCloseTime);
-		}
-	}
-
-	public void closingSession () {
-		if (inSession) {
-			inSession = false;
-			sessionCloseTime = Time.timeSinceLevelLoad;
-			Debug.Log ("Session ending time: " + sessionCloseTime);
 		}
 	}
 
