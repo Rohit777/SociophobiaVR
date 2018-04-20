@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   componentsToDisable:
   - {fileID: 20513359190330288}
-  - {fileID: 81232510638311246}
+  - {fileID: 0}
   - {fileID: 114424849258631812}
   playerCamera: {fileID: 1913372236368608}
 --- !u!114 &114818964328839538

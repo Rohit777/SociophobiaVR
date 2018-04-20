@@ -6,7 +6,7 @@ public class EventManager : MonoBehaviour {
 	public static bool inSession = true;
 
 	private static List<NPCComponent> componentList = new List<NPCComponent> ();
-	private static List<Quaternion> playerRotationList;
+	public static List<Quaternion> playerRotationList;
 	private static List<float> timeList = new List<float>();
 	private static float sessionCloseTime;
 
@@ -57,5 +57,9 @@ public class EventManager : MonoBehaviour {
 
 	public static void RecordPlayerMovement (Quaternion _rotation) {
 		playerRotationList.Add (_rotation);
+	}
+
+	public static void RepeatPlayerMovement () {
+
 	}
 }
