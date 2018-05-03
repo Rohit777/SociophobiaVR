@@ -10,12 +10,25 @@ public class EventManager : MonoBehaviour {
 	private static List<float> timeList = new List<float>();
 	private static float sessionCloseTime;
 
+	[SerializeField]private GameObject mainCamera;
+	[SerializeField]private float recordRate;
+	private static float delta = 0f;
+	private int index = 0;
+
 	// Use this for initialization
 	void Start () {
+	}
 
+	void update(){
+		delta += Time.deltaTime;
+		if (delta > recordRate) {
+			RecordPlayerMovement (mainCamera.transform.rotation);
+			delta = 0f;
+		}
 	}
 
 	public static void closeSession () {
+		delta = 0f;
 		inSession = false;
 		sessionCloseTime = Time.timeSinceLevelLoad;
 		Debug.Log ("Session end time: " + sessionCloseTime);
@@ -42,6 +55,7 @@ public class EventManager : MonoBehaviour {
 		
 	public void RepeatEvents () {
 		if (!inSession) {
+			RepeatPlayerMovement ();
 			int s = componentList.Count;
 			float diff = Time.timeSinceLevelLoad - sessionCloseTime;
 			for (int i = 0; i < s; i++) {
@@ -59,7 +73,12 @@ public class EventManager : MonoBehaviour {
 		playerRotationList.Add (_rotation);
 	}
 
-	public static void RepeatPlayerMovement () {
-
+	public void RepeatPlayerMovement () {
+		delta += Time.deltaTime;
+		if(delta >= recordRate){
+			mainCamera.transform.rotation = playerRotationList[index];
+			index++;
+			delta = 0f;
+		}
 	}
 }
