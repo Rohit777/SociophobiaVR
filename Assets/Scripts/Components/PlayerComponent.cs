@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerComponent : AbstractComponent {
 	
 	private void Start () {
-		InvokeRepeating ("SendPlayerTransform", 1f, 3f);
+		InvokeRepeating ("SendPlayerTransform", 0.1f, 0.1f);
 	}
 
 	private void SendPlayerTransform () {

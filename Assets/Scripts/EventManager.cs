@@ -10,8 +10,9 @@ public class EventManager : MonoBehaviour {
 	private static List<float> timeList = new List<float>();
 	private static float sessionCloseTime;
 
-	[SerializeField]private GameObject mainCamera;
-	[SerializeField]private float recordRate;
+	[SerializeField]private GameObject playerPref;
+	private GameObject player;
+	private float recordRate = 0.1f;
 	private static float delta = 0f;
 	private int index = 0;
 
@@ -20,10 +21,8 @@ public class EventManager : MonoBehaviour {
 	}
 
 	void update(){
-		delta += Time.deltaTime;
-		if (delta > recordRate) {
-			RecordPlayerMovement (mainCamera.transform.rotation);
-			delta = 0f;
+		if (!inSession) {
+			player = (GameObject)Instantiate (playerPref);
 		}
 	}
 
@@ -75,8 +74,9 @@ public class EventManager : MonoBehaviour {
 
 	public void RepeatPlayerMovement () {
 		delta += Time.deltaTime;
-		if(delta >= recordRate){
-			mainCamera.transform.rotation = playerRotationList[index];
+		if(delta >= 0.1f){
+			if(player != null)
+				player.transform.rotation = playerRotationList[index];
 			index++;
 			delta = 0f;
 		}
